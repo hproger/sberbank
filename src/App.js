@@ -5,6 +5,7 @@ import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from '@material-ui/core/styles';
 import Main from "./components/Main";
+import EditorUser from "./components/EditorUser";
 import Settings from "./components/Settings";
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +23,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <AppBar>
+        <AppBar position="relative">
           <MenuList className={classes.menu}>
             <MenuItem><Link to="/" className={classes.menuItem}>Список сотрудников</Link></MenuItem>
             <MenuItem><Link to="/user/add" className={classes.menuItem}>Добавить запись</Link></MenuItem>
@@ -31,7 +32,7 @@ function App() {
         </AppBar>
         <Grid container spacing={2}>
           <Route exact path="/" component={Main} />
-          <Route path="/user/add"  />
+          <Route path="/user/add" component={EditorUser} />
           <Route path="/settings" component={Settings} />
         </Grid>
       </div>
