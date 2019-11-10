@@ -1,6 +1,6 @@
-import { ADD_USER, SET_SETTINGS } from "./actionTypes";
+import {ADD_USER, SET_SETTINGS} from "./actionTypes";
 
-let nextUserId = 0;
+let nextUserId = 4;
 
 export const addUser = user => ({
   type: ADD_USER,
@@ -12,7 +12,7 @@ export const addUser = user => ({
 
 export const setSettings = settings => ({
   type: SET_SETTINGS,
-  payload: {
+  payload: [
     ...settings
-  }
+  ]
 });

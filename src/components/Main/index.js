@@ -1,25 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import ListUsers from "../ListUsers";
 import EditorUser from "../EditorUser";
+import { connect } from 'react-redux';
 
-function createData(lastName, position) {
-  return { lastName, position };
-}
-
-const users = [
-  createData('Малкович', 'Менеджер'),
-  createData('Шестаковский', 'СЕО'),
-  createData('Иванчук', 'Frontend-разработчик'),
-  createData('Григорович', 'Backend-разработчик'),
-];
-
-function Main() {
+function Main({users}) {
+  const [state, setState] = useState({
+    opened: false,
+    user: null
+  });
+  const openEditor = (isOpen, user) => {
+    setState({
+      opened: user !== state.user ? isOpen : !isOpen,
+      user: user !== state.user ? user : null
+    })
+  };
   return (
     <>
-      <ListUsers users={users} />
-      <EditorUser mode="view" />
+      <ListUsers users={users} openEditor={openEditor} />
+      {state.opened && (
+        <EditorUser user={state.user} readonly={true} />
+      )}
     </>
   );
 }
 
-export default Main;
+const mapStateToProps = state => ({
+  users: state.users
+});
+export default connect(mapStateToProps)(Main);

@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
   menuItem: {
     textDecoration: 'none',
     color: 'inherit'
+  },
+  content: {
+    flexWrap: 'nowrap'
   }
 }));
 
@@ -33,7 +36,7 @@ function App() {
               <MenuItem><Link to="/settings" className={classes.menuItem}>Настройки</Link></MenuItem>
             </MenuList>
           </AppBar>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} className={classes.content}>
             <Route exact path="/" component={Main} />
             <Route path="/user/add" component={EditorUser} />
             <Route path="/settings" component={Settings} />

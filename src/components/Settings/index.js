@@ -1,6 +1,8 @@
 import React from "react";
 import {Grid, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { setSettings } from "../../redux/actions";
 
 const useStyles = makeStyles(theme => ({
   listItemText: {
@@ -8,34 +10,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const listField = [
-  {code: 'lastName', name: 'Фамилия'},
-  {code: 'firstName', name: 'Имя'},
-  {code: 'patronymic', name: 'Отчество'},
-  {code: 'birthday', name: 'Дата рождения'},
-  {code: 'personNumber', name: 'Табельный номер'},
-  {code: 'position', name: 'Должность'},
-  {code: 'subdivision', name: 'Подразделение'},
-];
-
-function Settings() {
-  const [state, setState] = React.useState({
-    lastName: false,
-    firstName: false,
-    patronymic: false,
-    birthday: false,
-    personNumber: false,
-    position: false,
-    subdivision: false,
-  });
+function Settings({dispatch, settings}) {
   const classes = useStyles();
-  const handleChange = name => event => {
-    setState({[name]: event.target.checked});
+  const localSettings = [...settings];
+  const handleChange = code => event => {
+    localSettings.forEach(setting => {
+      if (code === setting.code) {
+        setting.isActive = event.target.checked;
+      }
+    });
+    dispatch(setSettings(localSettings));
   };
   return (
     <Grid container item xs={12}>
       <List dense={true}>
-        {listField.map(({code, name}) => (
+        {localSettings.map(({code, name, isActive}) => (
           <ListItem key={code}>
             <ListItemText
               primary={name}
@@ -44,7 +33,7 @@ function Settings() {
             <ListItemSecondaryAction>
               <Checkbox
                 onChange={handleChange(code)}
-                value={state[code]}
+                checked={isActive}
                 color="primary"
                 name={code}
               />
@@ -55,5 +44,7 @@ function Settings() {
     </Grid>
   );
 }
-
-export default Settings;
+const mapStateToProps = state => ({
+  settings: state.settings
+});
+export default connect(mapStateToProps)(Settings);
