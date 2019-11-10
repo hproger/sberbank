@@ -108,7 +108,7 @@ function EditorUser({dispatch, user = initialState, readonly = false}) {
   };
   const submitGoBack = (callback) => {
     callback();
-    if (!formik.errors) {
+    if (Object.keys(formik.errors).length) {
       history.push('/');
     }
   };
