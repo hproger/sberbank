@@ -4,6 +4,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import { Formik } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
@@ -12,8 +14,28 @@ import DateFnsUtils from '@date-io/date-fns';
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
+    minWidth: 201,
   },
+  saveBack: {
+    marginTop: 16,
+  },
+  saveAdd: {
+    marginTop: 16
+  }
 }));
+
+const positions = [
+  'Менеджер',
+  'СЕО',
+  'Frontend-разработчик',
+  'Backend-разработчик',
+];
+const subdivisions = [
+  'Отдел качества',
+  'Отдел разработки',
+  'Отдел тестирования',
+  'Руководство',
+];
 
 function EditorUser(props) {
   const classes = useStyles();
@@ -74,11 +96,45 @@ function EditorUser(props) {
                 <InputLabel htmlFor="personNumber">Табельный номер</InputLabel>
                 <Input id="personNumber" name="personNumber" value={values.personNumber} onChange={handleChange} />
               </FormControl>
+              <FormControl className={classes.formControl} disabled={isReadonly}>
+                <InputLabel id="position">Должность</InputLabel>
+                <Select
+                  labelId="position"
+                  id="position"
+                  value={values.position}
+                  onChange={item => {
+                    setFieldValue('position', item.target.value);
+                  }}
+                >
+                  {positions.map(name => (
+                    <MenuItem key={name} value={name}>{name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl className={classes.formControl} disabled={isReadonly}>
+                <InputLabel id="subdivision">Подразделение</InputLabel>
+                <Select
+                  labelId="subdivision"
+                  id="subdivision"
+                  value={values.subdivision}
+                  onChange={item => {
+                    setFieldValue('subdivision', item.target.value);
+                  }}
+                >
+                  {subdivisions.map(name => (
+                    <MenuItem key={name} value={name}>{name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
             {!isReadonly && (
               <Grid container spacing={2} alignItems="flex-end">
-                <Button variant="contained" size="small">Сохранить и добавить еще</Button>
-                <Button variant="contained" size="small">Сохранить и вернуться в список</Button>
+                <FormControl className={classes.formControl}>
+                  <Button variant="contained" size="small" className={classes.saveAdd}>Сохранить и добавить еще</Button>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                  <Button variant="contained" size="small" className={classes.saveBack}>Сохранить и вернуться в список</Button>
+                </FormControl>
               </Grid>
             )}
           </form>
