@@ -29,6 +29,8 @@ const validate = (values) => {
   }
   if (!values.personNumber) {
     errors.personNumber = 'Required';
+  } else if (values.personNumber < 1) {
+    errors.personNumber = 'Incorrect number';
   }
   if (!values.position) {
     errors.position = 'Required';
@@ -108,7 +110,7 @@ function EditorUser({dispatch, user = initialState, readonly = false}) {
   };
   const submitGoBack = (callback) => {
     callback();
-    if (Object.keys(formik.errors).length) {
+    if (Object.keys(formik.errors).length === 0) {
       history.push('/');
     }
   };
