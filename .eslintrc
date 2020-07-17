@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": ["eslint:recommended", "react-app", "prettier"],
+  "plugins": [
+    "prettier"
+  ],
+  "rules": {
+    "jsx-quotes": [
+      1,
+      "prefer-double"
+    ],
+    "max-len": ["warn", {
+      "code": 120,
+      "ignorePattern": "^import.*$"
+    }],
+    "no-unused-vars": "warn",
+    "eol-last": "warn",
+    "no-console": "warn",
+    "react/jsx-curly-newline": "off",
+    "react/jsx-filename-extensions": "off",
+    "react/self-closing-comp": "warn",
+    "react/jsx-curly-brace-presence": "warn",
+    "import/no-named-as-default": "off"
+  }
+}
